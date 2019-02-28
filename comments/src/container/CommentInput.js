@@ -10,10 +10,6 @@ class CommentInputContainer extends Component {
         comments: PropsTypes.array
     }
 
-    static defaultProps = {
-        comments: []
-    }
-    
     constructor() {
         super();
         this.state = {
@@ -32,8 +28,17 @@ class CommentInputContainer extends Component {
     }
 
     handleAddComment(comment) {
-        this.props.addComment(comment);
+        const {username, content} = comment;
+        if (!username) {
+            alert('请输入用户名');
+            return;
+        }
+        if (!content) {
+            alert('请输入评论内容');
+            return;
+        }
         this._saveComments([...this.props.comments, comment])
+        this.props.addComment(comment);
     }
    
 
@@ -46,8 +51,8 @@ class CommentInputContainer extends Component {
     }
 
     _saveComments(comments) {
-        window.localStorage.setItem('comments', comments)
-    }
+        window.localStorage.setItem('comments', JSON.stringify(comments))
+    }    
 
     render() {
         return (
@@ -56,9 +61,9 @@ class CommentInputContainer extends Component {
     }
 }
 
-const mapStateToProps = (store) => {
+const mapStateToProps = (state) => {
     return {
-        comments: store.comments
+        comments: state.comments
     }
 }
 

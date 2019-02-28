@@ -1,18 +1,13 @@
-import React, { Component } from 'react'
+import React, {
+    Component,
+} from 'react'
 import PropTypes from 'prop-types'
 
 class Comment extends Component {
     static propTypes = {
-        username: PropTypes.string,
-        content: PropTypes.string,
-        created_at: '',
-        onDelete: PropTypes.func
-    }
-
-    static defaultProps = {
-        username: '',
-        content: '',
-        onDelete: null
+        comment: PropTypes.object,
+        onDelete: PropTypes.func,
+        index: PropTypes.number
     }
     constructor() {
         super();
@@ -29,7 +24,7 @@ class Comment extends Component {
     }
 
     _updateAt() {
-        const timeApartStamp = Date.now() - this.props.created_at;
+        const timeApartStamp = Date.now() - this.props.comment.created_at;
         this.setState({
             timeApart: Math.round(timeApartStamp/1000) >= 60 ? `${Math.round(timeApartStamp / 1000 / 60)}分钟前` : `${Math.max(Math.round(timeApartStamp / 1000), 1)}秒前`
         })
@@ -40,17 +35,17 @@ class Comment extends Component {
     }
 
     getProcessedContent(content) {
-        console.log(content.replace(/`([\S\s]+?)`/g, '<code>$1</code>'));
+        //console.log(content.replace(/`([\S\s]+?)`/g, '<code>$1</code>'));
         return content.replace(/`([\S\s]+?)`/g, '<code>$1</code>')
     }
 
     render() {
         return (
             <div className="comment-content">
-                <div className="user"><span>{this.props.username}</span></div>：
-                <div className="content" dangerouslySetInnerHTML={{ __html: this.getProcessedContent(this.props.content)}}></div>
+                <div className="user"><span>{this.props.comment.username}</span></div>：
+                <div className="content" dangerouslySetInnerHTML={{ __html: this.getProcessedContent(this.props.comment.content)}}></div>
                 <div className="time-content"><span>{this.state.timeApart}</span></div>
-                <div className="delete-content"><span onClick={this.props.handleDeleteClick.bind(this)}>删除</span></div>
+                <div className="delete-content"><span onClick={this.handleDeleteClick.bind(this)}>删除</span></div>
             </div>
         )
     }

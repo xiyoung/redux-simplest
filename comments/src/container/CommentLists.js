@@ -10,25 +10,23 @@ class CommentListContainer extends Component {
         deleteComment: propTypes.func,
         initComment: propTypes.func
     }
-    static defaultProps = {
-        comments: []
-    }
 
     componentWillMount() {
-        this.props.initComment(this._loadComments)
+        this.props.initComment(this._loadComments())
     }
 
     handleDeleteComment(index) {
+        this._saveComments([...this.props.comments.slice(0, index), ...this.props.comments.slice(index + 1)])
         this.props.deleteComment(index);
-        this._saveComments([...this.props.comments.slice(0, index), ...this.props.comments.slice(index)])
+
     }
 
     _saveComments(comments) {
-        window.localStorage.setItem('comments', comments)
+        window.localStorage.setItem('comments', JSON.stringify(comments))
     }
 
     _loadComments() {
-        window.localStorage.getItem('comments')
+        return JSON.parse(window.localStorage.getItem('comments'))
     }
 
     render() {
@@ -42,10 +40,10 @@ const mapStateToProps = (state) => {
 const mapActionToProps = (dispatch) => {
     return {
         deleteComment: (index) => {
-            del_comment(index)
+            dispatch(del_comment(index))
         },
         initComment: (comments) => {
-            init_comment(comments);
+            dispatch(init_comment(comments));
         }  
     }
 }

@@ -46,14 +46,6 @@ class CommentInput extends Component {
     handleSubmit() {
         if(this.props.onSubmit) {
             const { username, content} = this.state;
-            if(!username) {
-                alert('请输入用户名');
-                return;
-            }
-            if(!content) {
-                alert('请输入评论内容');
-                return;
-            }
             this.props.onSubmit({username, content, created_at: Date.now()})
             this.setState({
                 content: ''

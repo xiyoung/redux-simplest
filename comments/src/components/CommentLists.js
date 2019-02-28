@@ -8,8 +8,7 @@ class CommentLists extends Component {
         onDelete: PropTypes.func
     }
     static defaultProps = {
-        comments: [],
-        onDelete: null
+        comments: []
     }
 
     handleDelete(index) {
@@ -19,7 +18,7 @@ class CommentLists extends Component {
     render() {
         return (
             <div className="comments-list-content">
-                {this.props.comments.map((comment, index) => <Comment onDelete={this.handleDelete.bind(this)} username={comment.username} content={comment.content} created_at={comment.created_at} index={index} key={index} />)}
+                {this.props.comments.map((comment, index) => <Comment onDelete={this.handleDelete.bind(this)} comment={comment} index={index} key={index} />)}
             </div>
         )
     }
