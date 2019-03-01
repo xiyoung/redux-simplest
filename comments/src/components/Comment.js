@@ -35,7 +35,6 @@ class Comment extends Component {
     }
 
     getProcessedContent(content) {
-        //console.log(content.replace(/`([\S\s]+?)`/g, '<code>$1</code>'));
         return content.replace(/`([\S\s]+?)`/g, '<code>$1</code>')
     }
 

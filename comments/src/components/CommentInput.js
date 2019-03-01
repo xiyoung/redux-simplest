@@ -18,16 +18,6 @@ class CommentInput extends Component {
         }
         this.commonInput = {}
     }
-    /* componentWillMount() {
-        this.setState({
-            username: this._loadUserName()
-        })
-    } */
-
-    /* _loadUserName() {
-      return window.localStorage.getItem('username')
-    } */
-
     componentDidMount() {
         this.commonInput.focus();
     }

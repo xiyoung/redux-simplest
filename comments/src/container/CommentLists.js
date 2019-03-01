@@ -26,7 +26,7 @@ class CommentListContainer extends Component {
     }
 
     _loadComments() {
-        return JSON.parse(window.localStorage.getItem('comments'))
+        return  window.localStorage.getItem('comments') ? JSON.parse(window.localStorage.getItem('comments')) : []
     }
 
     render() {
@@ -37,7 +37,7 @@ class CommentListContainer extends Component {
 const mapStateToProps = (state) => {
     return {comments: state.comments }
 }
-const mapActionToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         deleteComment: (index) => {
             dispatch(del_comment(index))
@@ -48,4 +48,4 @@ const mapActionToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapActionToProps)(CommentListContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(CommentListContainer)

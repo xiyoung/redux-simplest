@@ -24,7 +24,7 @@ class CommentInputContainer extends Component {
     }
 
     _loadUserName() {
-      return window.localStorage.getItem('username')
+      return window.localStorage.getItem('username') || ''
     }
 
     handleAddComment(comment) {
@@ -41,11 +41,6 @@ class CommentInputContainer extends Component {
         this.props.addComment(comment);
     }
    
-
-    saveUsernameToLocal(username) {
-        this._saveUserName(username)
-    }
-    
     _saveUserName(username) {
         window.localStorage.setItem('username', username)
     }
@@ -56,7 +51,7 @@ class CommentInputContainer extends Component {
 
     render() {
         return (
-          <CommentInput onUserNameInputBlur={this.saveUsernameToLocal.bind(this)} onSubmit={this.handleAddComment.bind(this)} username={this.state.username} />  
+          <CommentInput onUserNameInputBlur={this._saveUserName.bind(this)} onSubmit={this.handleAddComment.bind(this)} username={this.state.username} />  
         )
     }
 }
@@ -67,7 +62,7 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapActionToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch) => {
     return {
         addComment: (comment) => {
             dispatch(add_comment(comment));
@@ -76,4 +71,4 @@ const mapActionToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapActionToProps)(CommentInputContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(CommentInputContainer)

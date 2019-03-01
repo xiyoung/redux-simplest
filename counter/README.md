@@ -1,1 +1,3 @@
-sample with learning redux
+-> npm install
+
+-> npm start
